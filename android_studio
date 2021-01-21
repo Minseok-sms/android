@@ -1,0 +1,188 @@
+chapter 1 - 안드로이드구조
+
+
+안드로이드는 리눅스커널을 사용함.
+리눅스커널위에는 HAL 이라는 계층존재. -> 리눅스커널과 하드웨어 기기간의인터페이스부분. 드라이버구현
+Android 런타임 -> 안드로이드 애플리케이션을 구동하기위한 가상머신. 5.0 이상부터는 ART사용
+java API -> 개발자가 애플리케이션을 제작할때 사용하는 라이브러리
+시스템 어플리케이션 : 안드로이드os 내부에 내장되어있는 애플리케이션, 기본앱. camera, calendar
+Wi-Fi RTT : RTT를 지원하는 WIFI 장비를 찾아 실내에서 현재위치를 측정할수있는 기능.
+안드로이드 4대구성요소
+Activity, Service, Broadcast Broadcast Receiver, Content Provider.
+Activity -> 현재 보이는 화면을 관리하는 실행단위
+onCreate() : activity가 생성될때 자동호출, 화면회전이 발생했을시 자동호출
+
+chapter 2 - 뷰의 기본개념
+
+
+눈에보이는 모든 요소를 view라고 부름.
+레이아웃 : 컨테이너, 뷰 그룹이라고도불림. 
+위젯 : 문자열입력, 출력등 어떤기능을 가지고있는 뷰들을 위젯.
+id속성 : 특정 뷰의 구분짓기위함.
+layout_width, layout_height, margin, padding, layout_gravity --> 자기가 원하는 공간으로 이동
+view는 눈에보이는 모든요소 --> 위젯, 레이아웃(컨테이너,뷰그룹) 으로나뉨
+
+chater 3 - layout
+
+
+Linear Layout -> 좌에서우, 위에서 아래로 뷰를 배치하는 레이아웃.
+orientation -> vertical, horizontal
+
+layout_weight -> 뷰들을 배치하는 비율
+Relative Layout -> 뷰들간의 관계를 설정하여 배치하는 레이아웃.
+alignParentTop, alignParentBottom, alignParentLeft, alignParentRight
+
+chater 4 - Component
+@TextView
+textAppearance -> text테마
+TextView text1 = (TextView)findViewById(R.id.text2);
+
+@Button
+버튼이 눌러졋을시 리스너이벤트를 사용함.
+	btnListener1 listener1 = new BtnListener1(); --> OnCreate 안에서
+        button1.setOnClickListener(listener1);
+    }
+    //첫번째 버튼과 연결된 리스너
+    class BtnListener1 implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            text2.setText("첫번째 버튼을 눌렀습니다.");
+        }
+    }
+ 버튼 두개를 하나의 객체로 처리
+ class BtnListener34 implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            //이벤트가 발생된 뷰의 ID값을 추출
+            int id = v.getId();
+            switch (id){
+                case R.id.button3 :
+                    text2.setText("세번째 버튼을 눌렀습니다.");
+                    break;
+                case R.id.button4 :
+                    text2.setText("네번쨰 버튼을 눌렀습니다.");
+
+            }
+        }
+리스너객체없이 오직 버튼만누루면 호출되는 메서드
+public void btn5Method(View view){
+        text2.setText("다섯번째 버튼을 눌렀습니다");
+    }
+    
+@checkbox
+isChecked() ==> 체크박스가 체크되어있을시 true
+setChecked(true,false) --> 어플실행시 체크박스가 미리 체크 or 미체크
+toggle(); --> 체크박스의 체크반전.
+class CheckBoxListener implements CompoundButton.OnCheckedChangeListener{
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            int id = buttonView.getId();
+            switch(id){
+                case R.id.checkBox:
+                    if(isChecked == true)
+                        text1.setText("checkbox 1 is checked");
+                    else
+                        text1.setText("checkbox 1 is checked non");
+                    break;
+                case R.id.checkBox2 :
+                    if(isChecked == true)
+                        text1.setText("checkbox 2 is checked");
+                    else
+                        text1.setText("checkbox 2 is checked non");
+                    break;
+                case R.id.checkBox3 :
+                    if(isChecked == true)
+                        text1.setText("checkbox3 is checked");
+                    else
+                        text1.setText("checkbox3 is checked non");
+                    break;
+            }
+        }
+    }
+}
+@RadioButton
+라디오그룹안에 라디오버튼은 하나만선택가능
+setChecked(); 그룹내의 오로지 하나의 라디오버튼만 선택가능.
+RadioGroup group1; -->라디오 그룹내의 라디오버튼중 어떤것이 체크되어있는지 확인.
+int id1 = group1.getCheckedRadioButtonId();
+
+class RadioListener implements RadioGroup.OnCheckedChangeListener{
+     @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId)
+객체생성하면 그 그룹의 아이디값이들어오고 그룹내의 어떤라디오버튼이 선택되어있는지 int checkedId를 통해 알수잇음.
+ RadioListener radiolisten = new RadioListener();
+        group1.setOnCheckedChangeListener(radiolisten);
+        
+@ProgressBar
+둥글게 돌아가는것, 바형태
+ bar5.incrementProgressBy(5); -> 바 5증가
+ bar5.incrementProgressBy(-5); -> 바 5감소
+ bar5.setProgress(80); -> 한번에 80증가.
+ 
+ 
+@seekbar
+좌우로 움직이면서 숫자값을 설정하는것. progressbar와 비슷
+시크바의 목적은 설정된값을 가져오는걸의미
+seek1.incrementProgressBy(1);
+ seek1.setProgress(9);
+ int value1 = seek1.getProgress(); -> 시크바의 벨류값 출력
+ 
+ 
+ class SeekBarListener implements SeekBar.OnSeekBarChangeListener{
+ //현재 값을 변경시켰을대 반응 하는 메서드
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+ // 값을 변경하기위해 터치  하면 호출되는 메서드
+        public void onStartTrackingTouch(SeekBar seekBar) {
+ // 값을 변경하고 터치를 떄면호출되는 메서드
+        public void onStopTrackingTouch(SeekBar seekBar) {
+@EditText
+사용자가 입력한값
+edit1.setText("new edit text"); -> setText()
+String str = edit1.getText().toString(); -> getText()
+class EnterListener implements TextView.OnEditorActionListener{
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            return true; --> false일시 키보드창이 내려감.
+        }
+    }
+
+ class WatcherClass implements TextWatcher {
+
+        // 문자열 값이 변경되었을 때
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            text1.setText("changed text : " + s);
+        } --> 텍스트가변경될때 동시에 실행됨
+ 
+ 
+@ImageView
+drawable vs mipmap
+안드로이드에서 이미지를 넣는 폴더 -> drawable, mipmap
+ mipmap은 비트맵방식에서 백터방식으로 이미지를 변경, 런처아이콘용 이미지를 넣는폴더용
+ 
+ 
+ Chapter - 4 
+ @Adapter View
+ ListView list1;
+ String [] data1 = {"list1","list2","list3","list4","list5","list6","list7","list8"
+    ,"list9","list10","list11","list12","list13","list14","list15","list16","list17","list18"};
+ 리스트에담을 리스트값의 배열
+ ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,data1);
+        list1.setAdapter(adapter);
+ 
+ 
+  list1.setOnItemClickListener(listener); --> 리스트배열의 값건드리기.
+class ListListener implements AdapterView.OnItemClickListener{
+        @Override
+        //position => 사용자가 터치한 인덱스번호
+
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            text1.setText(data1[position]);
+        }
+    }
+@Custom ListView
+ ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.row, R.id.textView, data); 사용자가 직접 layout을만듬
+ .row --> res / layout / 우클릭/ new / layout new resource file
+ 
+
+
