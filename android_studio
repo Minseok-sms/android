@@ -139,7 +139,7 @@ seek1.incrementProgressBy(1);
 사용자가 입력한값
 edit1.setText("new edit text"); -> setText()
 String str = edit1.getText().toString(); -> getText()
-class EnterListener implements TextView.OnEditorActionListener{
+class EnterListener implements TextView.OnEditorActionListener{ --> 키보드창에서 엔터키누루면
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             return true; --> false일시 키보드창이 내려감.
@@ -156,8 +156,7 @@ class EnterListener implements TextView.OnEditorActionListener{
  
  
 @ImageView
-drawable vs mipmap
-안드로이드에서 이미지를 넣는 폴더 -> drawable, mipmap
+drawable vs mipmap 
  mipmap은 비트맵방식에서 백터방식으로 이미지를 변경, 런처아이콘용 이미지를 넣는폴더용
  
  
@@ -167,7 +166,7 @@ drawable vs mipmap
  String [] data1 = {"list1","list2","list3","list4","list5","list6","list7","list8"
     ,"list9","list10","list11","list12","list13","list14","list15","list16","list17","list18"};
  리스트에담을 리스트값의 배열
- ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,data1);
+ ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,data1); --> 안드로이드자체에서 제공되는 리스트 스타일
         list1.setAdapter(adapter);
  
  
@@ -183,6 +182,42 @@ class ListListener implements AdapterView.OnItemClickListener{
 @Custom ListView
  ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.row, R.id.textView, data); 사용자가 직접 layout을만듬
  .row --> res / layout / 우클릭/ new / layout new resource file
+ root element -> LinearLayout 으로 설정
+ @Custom ListView2 
+ int [] imgRes = {R.drawable.imgflag1, R.drawable.imgflag2, R.drawable.imgflag3, R.drawable.imgflag4,R.drawable.imgflag5,R.drawable.imgflag6,R.drawable.imgflag7,
+ R.drawable.imgflag8};
  
+ ArrayList<HashMap<String, Object>> data_list = new ArrayList<>();
+        for(int i = 0; i < imgRes.length; i++){
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("flag",imgRes[i]);
+            map.put("data1",data1[i]);
+            map.put("data2",data2[i]);
+            data_list.add(map);
+        }
+해쉬맵을 어레이리스트에 담음.
+String [] keys = {"flag","data1","data2"};
+int [] ids = {R.id.imageView, R.id.textView,R.id.textView2};
+SimpleAdapter adapter = new SimpleAdapter(this, data_list, R.layout.row, keys, ids);
+
+@two line listview
+
+ String [] data1 = {"s1","s2","s3","s4","s5","s6"};
+ String [] data2 = {"c1","c2","c3","c4","c5","c6"};
+ ArrayList<HashMap<String, String>> data_list = new ArrayList<>();
+        for(int i = 0 ; i < data1.length ; i++){
+            HashMap<String,String> map = new HashMap<>();
+            map.put("str1",data1[i]);
+            map.put("str2",data2[i]);
+
+            data_list.add(map);
+        }
+String [] keys = {"str1","str2"};
+int [] ids = {android.R.id.text1, android.R.id.text2};
+--> android.R.layout.simple_list_item_2 안드로이드에서 기본으로 제공되는 textview id값이다.
+SimpleAdapter adapter = new SimpleAdapter(this,data_list,android.R.layout.simple_list_item_2,keys, ids);
+
+@custom adapter
+
 
 
