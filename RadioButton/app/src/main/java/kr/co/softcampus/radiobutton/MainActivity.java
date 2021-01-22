@@ -20,8 +20,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         radio3 = (RadioButton)findViewById(R.id.radioButton3);
         radio4 = (RadioButton)findViewById(R.id.radioButton4);
+
         group1 = (RadioGroup)findViewById(R.id.group1);
         group2 = (RadioGroup)findViewById(R.id.group2);
+
         text1 = (TextView)findViewById(R.id.textView);
         text2 = (TextView)findViewById(R.id.textView2);
         RadioListener radiolisten = new RadioListener();
