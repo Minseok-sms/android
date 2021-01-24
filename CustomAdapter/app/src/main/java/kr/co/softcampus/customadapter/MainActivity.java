@@ -63,11 +63,13 @@ public class MainActivity extends AppCompatActivity {
             TextView sub_text = (TextView)convertView.findViewById(R.id.textView);
             Button sub_btn1 = (Button)convertView.findViewById(R.id.button);
             Button sub_btn2 = (Button)convertView.findViewById(R.id.button2);
+
+
             sub_btn1.setOnClickListener(listener);
             sub_btn2.setOnClickListener(listener);
-
             sub_text.setText(data[position]);
             return convertView;
+
         }
     }
     //
