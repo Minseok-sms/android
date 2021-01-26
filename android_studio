@@ -222,6 +222,26 @@ lass ListAdapater extends BaseAdapter{
             
         }
     }
+@customview2
+ int [] imgRes = {R.drawable.imgflag1, R.drawable.imgflag2, R.drawable.imgflag3, R.drawable.imgflag4,
+    R.drawable.imgflag5, R.drawable.imgflag6,R.drawable.imgflag7,R.drawable.imgflag8};
+
+String [] data1 = {"토고", "프랑스", "스위스", "스페인", "일본", "독일", "브라질","대한민국"};
+String [] data2 = {"togo", "france", "swiss","spain","japan","german","brazil","korea"};
+
+해쉬맵 ? <키:값>
+ArrayList<HashMap<String, Object>> data_list = new ArrayList<>();
+ for(int i = 0; i < imgRes.length; i++){
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("flag",imgRes[i]);
+        map.put("data1",data1[i]);
+        map.put("data2",data2[i]);
+        data_list.add(map);
+}
+        
+ 
+
+
 @Spinner
 스피너는 여러항목을 제공하고 선택할수잇는 adapterview이다.
 작은스마트폰화면을 효율적으로 사용할수있게 팝업창으로 나타낼수있는 view.
@@ -282,7 +302,7 @@ class PagerListener implements ViewPager.OnPageChangeListener{
             text1.setText(position + "번쨰 뷰가 나타났습니다.");
         }
         
-@OptionMenu
+@OptionMenu --> Activity를위한메뉴 **
 onCreateOptionsMenu
 Activity의 객체가 만들어 질때 자동으로 호출되는 메서드
 메서드가 true를 반환하면 메뉴가 나타난다.
@@ -344,4 +364,130 @@ menu.add(Menu.NONE, Menu.FIRST, Menu.NONE, "코드메뉴1" );
 
 
         return super.onOptionsItemSelected(item);
+
+@Context Menu -> 화면상에배치된 뷰들을 위한 메뉴
+메뉴가 설정된 뷰를 길게 누루면 메뉴가나타남 .-> 길게눌러야한다는 단점. 경우가 별로없음. 리스트뷰에다설정 하는
+것이 주로 많음.
+
+@popup menu
+public void btnMethod(View view){
+        PopupMenu pop = new PopupMenu(this, text1);
+        Menu menu = pop.getMenu();
+        
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.popup_menu,menu);
+        
+        PopupListener listener = new PopupListener();
+        pop.setOnMenuItemClickListener(listener);
+        pop.show();
+    }
+    class PopupListener implements PopupMenu.OnMenuItemClickListener{
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            int id = item.getItemId();
+            switch(id){
+                case R.id.item1:
+                    text1.setText("menu1");
+                    break;
+                case R.id.item2:
+                    text1.setText("menu2");
+                    break;
+                case R.id.item3:
+                    text1.setText("menu3");
+                    break;
+            }
+
+            return false;
+        }
+@ActionBar
+안드로이드 맨위에실행될시에 여러개의액션바를 줄수있다.
+public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu,menu);
+        return true;
+    }
+    
+showAsAction -> always, withText, never, ifRoom, collapseActionView
+collapseActionView --> 접어다펼쳤다할수잇음.
+ifRoom --> 공간이잇을시에 나타남
+
+페이지에서 무언가를 찾을때. 서치 사용
+searchView search_view = (SearchView)search_item.getActionView();
+search_view.setQueryHint("검색어를 입력해주세요."); // 서치 replace
+class SearchViewListener implements SearchView.OnQueryTextListener{
+        @Override
+        //서치뷰의 문자열이 변경될때마다 호출되는 메서드
+        public boolean onQueryTextChange(String newText) {
+            text1.setText(newText);
+            return false;
+        }
+        //키보드의 엔터키를 누루면 호출되는 메서드
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            text2.setText(query);
+            return false;
+        }
+    }
+
+@Toast 메세지
+사용자에게 잠시동안 보여주는 가상메세지
+ Toast t1 = Toast.makeText(this,"hello from the other side", Toast.LENGTH_SHORT);
+        // 토스트 메세 지를 운영체제에 요청
+        t1.show();
+
+커스텀 토스트메세지만들기
+
+LayoutInflater inflater = getLayoutInflater();
+View v1 = inflater.inflate(R.layout.custom_toast, null);
+ImageView img1 = (ImageView)v1.findViewById(R.id.imageView3);
+TextView text1 = (TextView)v1.findViewById(R.id.textView2);
+img1.setImageResource(R.drawable.img_android);
+text1.setText("custom toast");
+
+Toast t2 = new Toast(this);
+        t2.setView(v1);
+        t2.setDuration(Toast.LENGTH_LONG);
+        t2.setGravity(Gravity.CENTER,0,0);
+        t2.show();
+        
+@dialog
+개발자가 필요할때 사용자에게 메세지를 전달하는 용도로 사용,
+다이얼로그가 떠잇을시에는 주변뷰를 누룰수없음.
+메세지전달이나 입력을요구할때.
+-기본다이얼로그
+AlertDialog.Builder builder = new AlertDialog.Builder(this);
+builder.setTitle("default dialog");
+builder.setMessage("dialog's message");
+builder.setIcon(R.mipmap.ic_launcher);
+
+  DialogListener listener = new DialogListener();
+  
+builder.setPositiveButton("Positive",listener);
+builder.setNeutralButton("Neutral",listener);
+builder.setNegativeButton("Negative",listener);
+버튼종류에따라 기능.
+
+        class DialogListener implements DialogInterface.OnClickListener{
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            //버튼 종류
+            switch(which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    text1.setText("Positive");
+                    break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        text1.setText("Negative");
+                        break;
+                        case DialogInterface.BUTTON_NEUTRAL:
+                            text1.setText("Neutral");
+                            break;
+
+            }
+        }
+    }
+        
+-커스텀다이얼로그
+
+
+
 

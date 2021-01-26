@@ -28,12 +28,6 @@ public class MainActivity extends AppCompatActivity {
         ListAdapater adapter = new ListAdapater();
         list1.setAdapter(adapter);
 
-
-
-
-
-
-
     }
     class ListAdapater extends BaseAdapter{
         btnListener listener = new btnListener();
@@ -58,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             if(convertView == null){
                 LayoutInflater inflater = getLayoutInflater();
+                //xml의 뷰값들을 사용하기위해 변환작업
                 convertView = inflater.inflate(R.layout.row , null);
             }
             TextView sub_text = (TextView)convertView.findViewById(R.id.textView);
