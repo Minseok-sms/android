@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="btn2Method"
     android:orientation="vertical"
+
     tools:context=".MainActivity">
 
     <TextView
@@ -20,33 +20,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="btn1Method"
-        android:text="default Dialog" />
+        android:text="default listdialog" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="btn2Method"
-        android:text="custom dialog" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="btn3Method"
-        android:text="날짜 선택 다이어로그" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="btn4Method"
-        android:text="time dialog" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="btn5Method"
-        android:text="ProgressDialog" />
+        android:text="custom list dialog" />
 </LinearLayout>

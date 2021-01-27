@@ -4,18 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     TextView text1;
+    ProgressDialog pro;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +109,37 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
             text1.setText(year + "년 " + (month + 1) + "월 " + dayOfMonth + "일");
+        }
+    }
+    public void btn4Method(View view){
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        Dialog4Listener listener = new Dialog4Listener();
+        TimePickerDialog picker = new TimePickerDialog(this,listener,hour,minute, true);
+        picker.show();
+    }
+
+    class Dialog4Listener implements TimePickerDialog.OnTimeSetListener{
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            text1.setText(hourOfDay + "시 " + minute + "분");
+        }
+    }
+
+    public  void btn5Method(View view){
+        pro = ProgressDialog.show(this,"title","description");
+        Handler handler = new Handler();
+        ThreadClass thread = new ThreadClass();
+        handler.postDelayed(thread, 5000);
+    }
+
+    class ThreadClass extends Thread{
+        @Override
+        public void run() {
+
+            pro.cancel();
         }
     }
 }

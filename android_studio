@@ -487,7 +487,114 @@ builder.setNegativeButton("Negative",listener);
     }
         
 -커스텀다이얼로그
+AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("custom dialog");
+        //setmessage 를 커스텀으로 교체
+        builder.setIcon(R.mipmap.ic_launcher);
 
+        LayoutInflater inflater = getLayoutInflater();
+        View v1 = inflater.inflate(R.layout.dialog, null);
+        builder.setView(v1);
+        Dialog2Listener listener = new Dialog2Listener();
 
+        builder.setPositiveButton("ok",listener);
+        builder.setNegativeButton("No",null);
+        builder.show();
+        
+        
+        class Dialog2Listener implements DialogInterface.OnClickListener{
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            AlertDialog alert = (AlertDialog)dialog;
+            EditText edit1 = (EditText)alert.findViewById(R.id.editTextTextPersonName);
+            EditText edit2 = (EditText)alert.findViewById(R.id.editTextTextPersonName2);
+            String str1 = edit1.getText().toString();
+            String str2 = edit2.getText().toString();
 
+            text1.setText("edit1 : " + str1 + str2);
+-캘린더
+  Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        Dialog3Listener listener = new Dialog3Listener();
+        DatePickerDialog picker = new DatePickerDialog(this, listener, year, month, day);
+        picker.show();
+        
+        class Dialog3Listener implements DatePickerDialog.OnDateSetListener{
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            text1.setText(year + "년 " + (month + 1) + "월 " + dayOfMonth + "일"); --> month에 +1해줘야함
+            
+        }
+
+-타임켈린더
+Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        Dialog4Listener listener = new Dialog4Listener();
+        TimePickerDialog picker = new TimePickerDialog(this,listener,hour,minute, true);
+        picker.show();
+    }
+
+    class Dialog4Listener implements TimePickerDialog.OnTimeSetListener{
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            text1.setText(hourOfDay + "시 " + minute + "분");
+        }
+    }
+
+@리스트 다이얼로그
+public void btn1Method(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("list dialog");
+        builder.setNegativeButton("exit",null);
+        Dialog1Listener listener = new Dialog1Listener();
+
+        builder.setItems(data1,listener);
+        builder.show();
+    }
+
+    class Dialog1Listener implements DialogInterface.OnClickListener{
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            text1.setText("list : " + data1[which]);
+        }
+    }
+-- 커스텀 리스트 다이얼로그
+ public void btn2Method(View view){
+        ArrayList<HashMap<String, Object>> list = new ArrayList<>();
+        for(int i = 0; i < data2.length;i++){
+            HashMap<String,Object> map = new HashMap<String, Object>();
+            map.put("data2",data2[i]);
+            map.put("data3",data3[i]);
+            list.add(map);
+        }
+
+        String [] keys = {"data2","data3"};
+        int [] ids = {R.id.textView2, R.id.imageView};
+        SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.row, keys, ids);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("custom list dialog");
+        Dialog2Listener listener = new Dialog2Listener();
+        builder.setAdapter(adapter, listener);
+        builder.setNegativeButton("cancel",null);
+        builder.show();
+
+    }
+    class Dialog2Listener implements DialogInterface.OnClickListener{
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            text1.setText("custom list : " + data2[which]);
+        }
+    }
+    
+@notification
+어플리케이션과 별도로 관리되는 메서드
+notification메세지를 os를 요청하면 os는 알림창 영역에 알림메세지를 표시함.
+사용자가 메세지를 확인하거나 제거하기전까지 메세지유지.
+메세지를 터치하면 지정된 activity가 실행되어 애플리케이션 실행을 유도할수있다.
 
