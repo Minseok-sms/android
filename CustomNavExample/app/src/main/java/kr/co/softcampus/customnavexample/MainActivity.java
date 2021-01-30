@@ -30,26 +30,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        drawerLayout.setDrawerListener(listener);
-        drawerView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                return true;
-            }
-        });
-        Button btn_close = (Button) findViewById(R.id.btn_close);
-        btn_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.closeDrawers();
-            }
-
-        });
-
-
         DrawerLayout.DrawerListener listener = new DrawerLayout.DrawerListener() {
-            @Override
+
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
 
             }
@@ -68,4 +50,29 @@ public class MainActivity extends AppCompatActivity {
             public void onDrawerStateChanged(int newState) {
 
             }
+        };
+        drawerLayout.setDrawerListener(listener);
+
+
+
+
+
+        drawerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                return true;
+            }
         });
+        Button btn_close = (Button) findViewById(R.id.btn_close);
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawers();
+            }
+
+        });
+
+
+    }
+}
