@@ -724,11 +724,113 @@ class ThreadClass extends Thread{
         protected void onProgressUpdate(Long... values) {
             super.onProgressUpdate(values);
         }
-
+//doInBackground가 완료되면 Main thread가 처리
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
         }
     }
 }
+@RunOnUiThread
+개발자가 발생시킨 일반쓰래드에서 코드일부를 Main Thread가 처리할수있도록 하는메서드
+class ThreadClass extends Thread{
+        @Override
+        public void run() {
+            while(isRunning){
+                SystemClock.sleep(100);
+                final long time = System.currentTimeMillis();
+                Log.d("test", "thread : " + time);
+
+                runOnUiThread(new Runnable(){
+                    @Override
+                    public void run() {
+                        text2.setText("Thread : " + time);
+                    }
+                });class ThreadClass exclass ThreadClass extends Thread{
+        @Override
+        public void run() {
+            while(isRunning){
+                SystemClock.sleep(100);
+                final long time = System.currentTimeMillis();
+                Log.d("test", "thread : " + time);
+
+                runOnUiThread(new Runnable(){
+                    @Override
+                    public void run() {
+                        text2.setText("Thread : " + time);
+                    }
+                });
+            }
+        }
+    }tends Thread{
+        @Override
+        public void run() {
+            while(isRunning){
+                SystemClock.sleep(100);
+                final long time = System.currentTimeMillis();
+                Log.d("test", "thread : " + time);
+
+                runOnUiThread(new Runnable(){
+                    @Override
+                    public void run() {
+                        text2.setText("Thread : " + time);
+                    }
+                });
+            }
+        }
+    }
+            }
+        }
+    }
+    
+@액티비티 실행하기
+안드로이드 4대구성요소
+하나의 애플리케이션은 독립된 실행단위인 4대구성요소로 구성
+Activity : 화면
+Service : 백그라운드 실행단위
+Broad Cast Receiver : Os가 전달하는 메세지를 전달받아 실행되는 실행단위.
+Contents Provider : 저장된 데이터를 제공하기 위한 실행단위.
+
+Intent : 새로운 activity 를 실행하게됨. (새로운화면) 개발자가 직접 실행하는것이 아니라 OS에게 실행을 요청하게됨. 실행요청을 전달받은 OS는 해당실행요소를 실행하게되는데 실행요청을 위한 정보를 담는 객체가 Intent이다.
+첫번쨰 액티비티가 두번쨰 액티비티를 실행하게되면 첫번째는 back Stack인 일시정지상태인 스택에들어감
+새로실행된 액티비티가 제거되면 back stack에있던 activity가 다시활동하게됨.
+
+ Intent intent = new Intent(this, SecondActivity.class);
+        startActivity(intent);
+@startActivityForResult
+두번쨰 액티비티실행후 다시돌아왓을때 실행할코드가있으면 실행할수있음.
+ startActivityForResult(intent, 0);
+
+    }
+
+    @Override
+    
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        text2.setText("other Activity back");
+	// resultCode = 돌아올때 어떤Activity에서 반환했는지 알기가능
+	setResult(RESULT_CANCELED);
+	switch(resultCode){
+            case RESULT_OK:
+                int value1 = data.getIntExtra("value1",0);
+                double value2 = data.getDoubleExtra("value2",0.0);
+                boolean value3 = data.getBooleanExtra("value3",false);
+                String value4 = data.getStringExtra("value4");
+
+                text1.setText("value1 : " + value1 + "\n");
+                text1.append("value2 : " + value2 + "\n");
+                text1.append("value3 : " + value3 + "\n");
+                text1.append("value4 : " + value4);
+                break;
+        }
+
+    }
+    
+    
+    startActivityForResult(intent, 0); --> 정수값이 어떤 엑티비티를 실행하고 왔는지 알기위함
+@데이터전달하기
+ intent.putExtra("data1", 100);
+        intent.putExtra("data2", 11.11);
+        
+@객체전달하기.
 
