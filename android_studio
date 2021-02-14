@@ -833,4 +833,17 @@ Intent : 새로운 activity 를 실행하게됨. (새로운화면) 개발자가 
         intent.putExtra("data2", 11.11);
         
 @객체전달하기.
+@다른어플리케이션에서 또다른 에플리케이션을 실행하는 intent
+AndroidManifest.xml -> intentfilter 
+<intent-filter>
+                <action android:name="com.test.second"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+</intent-filter>
+
+
+
+
+Intent intent = new Intent("com.test.second");
+만약 똑같은 intent filter 가설정되어있을시 여러어플중 고르는창이 뜬다.
+
 
