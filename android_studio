@@ -847,3 +847,38 @@ Intent intent = new Intent("com.test.second");
 만약 똑같은 intent filter 가설정되어있을시 여러어플중 고르는창이 뜬다.
 
 
+
+@안드로이드에 내장되어있는 어플리케이션사용
+ Uri uri = Uri.parse("geo:37.243243,131.861601");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+        -->지도
+        
+ Uri uri = Uri.parse("http://developter.android.com");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);        
+        -->크롬창
+        
+Uri uri = Uri.parse("tel:01000000000");
+        Intent intent = new Intent(Intent.ACTION_DIAL,uri);
+        startActivity(intent);        
+	-->다이얼로그 전화
+	
+if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            int chk = checkCallingPermission(Manifest.permission.CALL_PHONE);
+            if(chk == PackageManager.PERMISSION_DENIED){
+                return;
+            }
+        }
+        Uri uri = Uri.parse("tel:000000000");
+        Intent intent = new Intent(Intent.ACTION_CALL,uri);
+        startActivity(intent);
+        -->다이얼로그전화 바로 걸기. 권한승인
+        --><uses-permission android:name="android.permission.CALL_PHONE"/> ->Manifest
+        
+@broad cast receiver
+명시적 인텐트 : 클래스명을 직접기술
+암시적 인텐트 : Intent filter를통하여 실행	
+안드로이드 8.0이상이후 백그라운드 실행이 자유롭다는점에서 개발의 자율성을 가지지만 높은 사양을 요구
+8.0이후에는 일부를 제외한 모든 broadcast Receiver는 암시적인텐트로 실행할경우 코드를 통해 등록
+
